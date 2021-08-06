@@ -40,6 +40,9 @@
 		    	<input class="btn btn-warning mt-3 text-dark" type="submit" value="記録">
 		    </div>
 		</form>
+		<div class="bg-warning text-right mt-3">
+	        <a href="/menus" class="btn btn-dark text-warning">Back</a>
+	    </div>
 		@if ($errors->any())
 	    <div class="alert alert-danger mb-0">
 	    	<ul>

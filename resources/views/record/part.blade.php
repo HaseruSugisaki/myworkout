@@ -41,6 +41,9 @@
 				</div>
 				@endforeach
 	        </div>
+	        <div class="bg-warning text-right mt-3">
+		        <a href="/records/search" class="btn btn-dark text-warning">Back</a>
+		    </div>
 		</div> 
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
