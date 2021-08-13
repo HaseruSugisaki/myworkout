@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
-    public function index() {
-        $menu = Menu::get();
+    public function index(Request $request) {
+        $user_id = Auth::id();
+        $menu = Menu::where('user_id', '=', $user_id)->get();
         return view('menu/index', compact('menu'));
     }
     public function edit() {
-        $menu = Menu::get();
+        $user_id = Auth::id();
+        $menu = Menu::where('user_id', '=', $user_id)->get();
         return view('menu/create', compact('menu'));
     }
     
@@ -26,7 +30,9 @@ class MenuController extends Controller
             'name.required' => '種目名を登録してください',
             'name.unique' => 'この種目は登録済みです'
         ]);
+        $user_id = Auth::id();
         $menu_table = new Menu();
+        $menu_table->user_id = $user_id;
         $menu_table->part = $part;
         $menu_table->name = $name;
         $menu_table->save();

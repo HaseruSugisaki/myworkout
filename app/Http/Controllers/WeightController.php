@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Weight;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class WeightController extends Controller
 {
@@ -41,21 +43,26 @@ class WeightController extends Controller
             'west.numeric' => 'ウエストに文字は入力できません',
         ]
         );
-        $record_table = new Weight();
-        $record_table->day = $day;
-        $record_table->weight = $weight;
-        $record_table->fatpercentage = $fatpercentage;
-        $record_table->fatmass = $fatmass;
-        $record_table->musclemass = $musclemass;
-        $record_table->leanbodymass = $leanbodymass;
-        $record_table->bmi = $bmi;
-        $record_table->west = $west;
-        $record_table->save();
+        $user_id = Auth::id();
+        $weight_table = new Weight();
+        $weight_table->user_id = $user_id;
+        $weight_table->day = $day;
+        $weight_table->weight = $weight;
+        $weight_table->fatpercentage = $fatpercentage;
+        $weight_table->fatmass = $fatmass;
+        $weight_table->musclemass = $musclemass;
+        $weight_table->leanbodymass = $leanbodymass;
+        $weight_table->bmi = $bmi;
+        $weight_table->west = $west;
+        $weight_table->save();
         return redirect('weights');
     }
     
     public function record(Request $request) {
-        $weights = Weight::latest()->get();
+        $user_id = Auth::id();
+        $weights = Weight::latest()
+                    ->where('user_id', '=', $user_id)
+                    ->get();
         return view('weight/record', compact('weights'));
     }
 }

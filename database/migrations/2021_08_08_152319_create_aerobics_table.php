@@ -4,20 +4,24 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenusTable extends Migration
+class CreateAerobicsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-     //menus_table.php
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('aerobics', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('part');
+            $table->integer('user_id');
             $table->string('name');
+            $table->string('part');
+            $table->dateTime('trained_at');
+            $table->integer('times');
+            $table->integer('set');
+            $table->string('memo');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('aerobics');
     }
 }

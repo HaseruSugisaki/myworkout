@@ -17,6 +17,9 @@
                     You are logged in!
                 </div>
             </div>
+            <div class="text-right mt-3">
+    	        <a href="/homes" class="btn btn-dark">Home画面</a>
+    	    </div>
         </div>
     </div>
 </div>

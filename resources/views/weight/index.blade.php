@@ -10,7 +10,7 @@
 	        <div class="bg-warning mt-3 mb-2">
     	        <a href="/weights/record" class="btn btn-dark text-warning">履歴確認へ</a>
     	    </div>
-    	    <form action="/weight/store" method="post">
+    	    <form action="/weights/store" method="post">
     	        @csrf
     	        <div>
     		    	<label for="day" data-target-input="nearest"></lavel>

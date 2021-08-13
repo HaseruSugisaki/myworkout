@@ -8,6 +8,8 @@ use App\Record;
 use App\Aerobic;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class RecordController extends Controller
 {
@@ -20,11 +22,13 @@ class RecordController extends Controller
     // }
     
     public function create($id) {
+        $user_id = Auth::id();
         $menu = Menu::find($id);
         return view('record/create', compact('menu'));
     }
     
     public function aerobic($id) {
+        $user_id = Auth::id();
         $menu = Menu::find($id);
         return view('record/aerobic', compact('menu'));
     }
@@ -55,7 +59,9 @@ class RecordController extends Controller
             
         ]
         );
+        $user_id = Auth::id();
         $record_table = new Record();
+        $record_table->user_id = $user_id;
         $record_table->name = $name;
         $record_table->part = $part;
         $record_table->trained_at = $trained_at;
@@ -89,7 +95,9 @@ class RecordController extends Controller
             
         ]
         );
+        $user_id = Auth::id();
         $aerobic_table = new Aerobic();
+        $aerobic_table->user_id = $user_id;
         $aerobic_table->name = $name;
         $aerobic_table->part = $part;
         $aerobic_table->trained_at = $trained_at;
@@ -105,6 +113,7 @@ class RecordController extends Controller
         $day2 = $request->day2;
         $part = $request->part;
         $menus = Menu::get();
+        $user_id = Auth::id();
         $recordQuery = Record::select('*');
         $aerobicQuery = Aerobic::select('*');
         
@@ -115,15 +124,15 @@ class RecordController extends Controller
 
         // 開始日が入力されていた場合
         if ($day != null) {
-            $recordQuery->where('trained_at', '>=', $day);
-            $aerobicQuery->where('trained_at', '>=', $day);
+            $recordQuery->where('trained_at', '>=', $day)->where('user_id', '=', $user_id);
+            $aerobicQuery->where('trained_at', '>=', $day)->where('user_id', '=', $user_id);
         }
 
         // 終了日が入力されていた場合
         if ($day2 != null) {
             $day2_search = Carbon::parse($day2)->addDay();
-            $recordQuery->where('trained_at', '<', $day2_search);
-            $aerobicQuery->where('trained_at', '<', $day2_search);
+            $recordQuery->where('trained_at', '<', $day2_search)->where('user_id', '=', $user_id);
+            $aerobicQuery->where('trained_at', '<', $day2_search)->where('user_id', '=', $user_id);
         }
         // 部位が検索条件にある場合
         // if ($part != '全部') {

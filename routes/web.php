@@ -42,4 +42,5 @@ Route::get('/records/event', 'RecordController@event');
 
 //体重記録
 Route::get('/weights', 'WeightController@index');
+Route::post('/weights/store', 'WeightController@store');
 Route::get('/weights/record', 'WeightController@record');
